@@ -37,7 +37,7 @@
 				<div class="navbar-header">
 					<!-- Logo -->
 					<div class="navbar-brand">
-						<a class="logo" href="index.html">
+						<a class="logo" href="{{ '/' }}">
 							<img src="{{ asset('web/img/logo.png') }}" alt="logo">
 						</a>
 					</div>

@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CatController as AdminCatController;
 use App\Http\Controllers\Admin\ExamController as AdminExamController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\SkillController as AdminSkillController;
+use App\Http\Controllers\Admin\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\CatController;
 use App\Http\Controllers\Web\ExamController;
@@ -64,5 +67,26 @@ Route::prefix('dashboard')->middleware(['auth','verified','can-enter-dashboard']
     Route::get('/exams/toggle/{exam}' , [AdminExamController::class , 'toggle']);
     Route::get('/exams/delete/{exam}' , [AdminExamController::class , 'delete']);
     Route::get('/exams/delete-question/{question}' , [AdminExamController::class , 'deleteOneQuestion']);
+
+    Route::get('/students' ,[StudentController::class , 'index']);
+    Route::get('/students/show-scores/{id}' ,[StudentController::class , 'showScores']);
+    Route::get('/students/open-exam/{studentId}/{examId}' ,[StudentController::class , 'openExam']);
+    Route::get('/students/close-exam/{studentId}/{examId}' ,[StudentController::class , 'closeExam']);
+
+    Route::middleware('superadmin')->group(function (){
+    Route::get('/admins' ,[AdminController::class , 'index']);
+    Route::get('/admins/create' ,[AdminController::class , 'create']);
+    Route::post('/admins/store' ,[AdminController::class , 'store']);
+    Route::put('/admins/promote/{id}' ,[AdminController::class , 'promote']);
+    Route::put('/admins/demote/{id}' ,[AdminController::class , 'demote']);
+    Route::delete('/admins/delete/{id}' , [AdminController::class , 'delete']);
+    });
+
+    Route::get('/messages' ,[MessageController::class , 'index']);
+    Route::get('/messages/show/{message}' ,[MessageController::class , 'show']);
+    Route::post('/messages/response/{message}' ,[MessageController::class , 'response']);
+    Route::delete('/messages/delete/{message}' ,[MessageController::class , 'delete']);
+
 });
+
 
