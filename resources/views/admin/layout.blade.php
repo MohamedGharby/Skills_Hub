@@ -77,6 +77,7 @@
 <script src="{{ asset('admin/js/bootstrap.bundle.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/js/adminlte.js') }}"></script>
+
 @yield('scripts')
 </body>
 </html>

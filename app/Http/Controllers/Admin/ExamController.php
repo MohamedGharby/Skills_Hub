@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ExamAddedEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
@@ -14,7 +15,8 @@ class ExamController extends Controller
 {
     public function index()
     {
-        $data['exams'] = Exam::select('id' , 'skill_id' , 'name' , 'img' , 'question_num' , 'active')->orderBy('id' , 'DESC')->paginate(10) ;
+        $data['exams'] = Exam::select('id' , 'skill_id' , 'name' , 'img' , 'question_num' , 'active')
+        ->orderBy('id' , 'DESC')->paginate(10) ;        
         return view('admin.exams.index')->with($data);
     }
 
@@ -123,6 +125,7 @@ class ExamController extends Controller
             'active' => 1
         ]);
 
+        event(new ExamAddedEvent);
         return redirect(url('dashboard/exams'));
     }
 

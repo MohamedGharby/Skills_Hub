@@ -19,6 +19,9 @@
 
 		<!-- Custom stlylesheet -->
 		<link type="text/css" rel="stylesheet" href="{{ asset('web/css/style.css') }}"/>
+		<!-- Toastr style links -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         @yield('styles')
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -111,6 +114,24 @@
 				$('#logoutForm').submit()
 			})
 		</script>
+		<!-- Pusher -->
+		<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+		<script>
+
+			// Enable pusher logging - don't include this in production
+			Pusher.logToConsole = true;
+
+			var pusher = new Pusher('8a90ac3d31f7bbdd1b6f', {
+			cluster: 'eu'
+			});
+
+			var channel = pusher.subscribe('notification-channel');
+			channel.bind('exam-added', function(data) {
+				toastr.success(data)
+			});
+		</script>
+		<!-- Toastr script links -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         @yield('scripts')
 	</body>
 </html>
